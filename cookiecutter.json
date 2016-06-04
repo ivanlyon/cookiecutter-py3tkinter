@@ -1,8 +1,11 @@
 {
-	"full_name": "Robert Lyon",
-	"email": "roblyon00@gmail.com",
+    "full_name": "Robert Lyon",
+    "email": "roblyon00@gmail.com",
     "display_name": "Py3 Tkinter",
     "repo_name": "py3tinker",
-	"version": "0.0.1",
-	"short_description": "Python 3 Tkinter GUI"
+    "version": "0.0.1",
+    "short_description": "Python 3 Tkinter GUI",
+    "insert_navigation": "True",
+    "insert_status": "True",
+    "insert_toolbar": "True"
 }
