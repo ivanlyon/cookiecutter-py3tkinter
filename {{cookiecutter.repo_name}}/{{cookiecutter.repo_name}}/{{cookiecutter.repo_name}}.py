@@ -65,17 +65,21 @@ class NavigationBar(ttk.Frame):
 {% if cookiecutter.insert_status == 'y' %}
 class StatusBar(ttk.Frame):
     "Sample status bar provided by cookiecutter switch."
-# TODO: add sample status updates such as mouse events
+    _status_bars = 4
+
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
         self.labels = []
         self.config(border=1, relief=tkinter.GROOVE)
-        for i in range(1, 5):
-            _label_text = "Status " + str(i)
+        for i in range(self._status_bars):
+            _label_text = "Unset status " + str(i + 1)
             self.labels.append(ttk.Label(self, text=_label_text))
-            self.labels[i - 1].config(relief=tkinter.GROOVE)
-            self.labels[i - 1].pack(side=tkinter.LEFT, fill=tkinter.X)
+            self.labels[i].config(relief=tkinter.GROOVE)
+            self.labels[i].pack(side=tkinter.LEFT, fill=tkinter.X)
         self.pack()
+
+    def set_text(self, status_index, new_text):
+        self.labels[status_index].config(text=new_text)
 {% endif %}
 
 
@@ -201,6 +205,14 @@ class Application(tkinter.Tk):
 {% if cookiecutter.insert_status == 'y' %}# Status bar selection == 'y'
         self.statusbar = StatusBar(self)
         self.statusbar.pack(side="bottom", fill="x")
+        self.bind_all('<Enter>', lambda e: self.statusbar.set_text(0,
+                      'Mouse: 1'))
+        self.bind_all('<Leave>', lambda e: self.statusbar.set_text(0,
+                      'Mouse: 0'))
+        self.bind_all('<Button-1>', lambda e: self.statusbar.set_text(1,
+                      'Clicked at x = ' + str(e.x) + ' y = ' + str(e.y)))
+        self.start_time = datetime.datetime.now()
+        self.uptime()
 {% endif %}
 
 {% if cookiecutter.insert_navigation == 'y' %}# Navigation selection == 'y'
@@ -215,6 +227,13 @@ class Application(tkinter.Tk):
 
         self.mainframe = MainFrame(self)
         self.mainframe.pack(side="right", fill="y")
+
+{% if cookiecutter.insert_status == 'y' %}# Status bar selection == 'y'
+    def uptime(self):
+        _upseconds = str(int(round((datetime.datetime.now() - self.start_time).total_seconds())))
+        self.statusbar.set_text(2, 'Uptime: ' + _upseconds)
+        self.after(1000, self.uptime)
+{% endif %}
 
 if __name__ == "__main__":
     APPLICATION_GUI = Application()
