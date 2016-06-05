@@ -6,7 +6,7 @@
 """
 
 import datetime
-import sysk
+import sys
 import time
 import tkinter
 import tkinter.ttk as ttk
@@ -144,8 +144,7 @@ class MenuBar(tkinter.Menu):
         helpmenu.add_command(label="Help", command=self.help_dialog,
                              accelerator="F1")
         helpmenu.add_command(label="About", command=self.about_dialog)
-# TODO: show help when F1 is caught
-#        self.bind_all('<F1>', lambda event: self.helpDialog)
+        self.bind_all('<F1>', self.help_dialog)
 
         self.add_cascade(label="File", underline=0, menu=filemenu)
         self.add_cascade(label="Help", underline=0, menu=helpmenu)
@@ -155,10 +154,10 @@ class MenuBar(tkinter.Menu):
 
         sys.exit(0)
 
-    def help_dialog(self):
+    def help_dialog(self, event):
         "Dialog cataloging results achievable, and provided means available."
 
-        _description = "Not yet created."
+        _description = "Help not yet created."
         PopupDialog(self, "{{cookiecutter.display_name}}", _description)
 
     def about_dialog(self):
