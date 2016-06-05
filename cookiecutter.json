@@ -5,7 +5,7 @@
     "repo_name": "py3tinker",
     "version": "0.0.1",
     "short_description": "Python 3 Tkinter GUI",
-    "insert_navigation": "True",
-    "insert_status": "True",
-    "insert_toolbar": "True"
+    "insert_navigation": "y",
+    "insert_status": "y",
+    "insert_toolbar": "y"
 }

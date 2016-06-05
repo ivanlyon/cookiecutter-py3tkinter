@@ -6,7 +6,7 @@
 """
 
 import datetime
-import sys
+import sysk
 import time
 import tkinter
 import tkinter.ttk as ttk
@@ -31,6 +31,7 @@ class PopupDialog(ttk.Frame):
         self.top.destroy()
 
 
+{% if cookiecutter.insert_navigation == 'y' %}
 class NavigationBar(ttk.Frame):
     "Sample navigation pane provided by cookiecutter switch."
 
@@ -58,8 +59,10 @@ class NavigationBar(ttk.Frame):
         _index = int(widget.curselection()[0])
         _value = widget.get(_index)
         print('List item %d / Navigation %s' % (_index, _value))
+{% endif %}
 
 
+{% if cookiecutter.insert_status == 'y' %}
 class StatusBar(ttk.Frame):
     "Sample status bar provided by cookiecutter switch."
 # TODO: add sample status updates such as mouse events
@@ -73,8 +76,10 @@ class StatusBar(ttk.Frame):
             self.labels[i - 1].config(relief=tkinter.GROOVE)
             self.labels[i - 1].pack(side=tkinter.LEFT, fill=tkinter.X)
         self.pack()
+{% endif %}
 
 
+{% if cookiecutter.insert_toolbar == 'y' %}
 class ToolBar(ttk.Frame):
     "Sample toolbar provided by cookiecutter switch."
 
@@ -94,6 +99,7 @@ class ToolBar(ttk.Frame):
         "Sample function provided to show how a toolbar command may be used."
 
         print('Toolbar button', number, 'pressed')
+{% endif %}
 
 
 class MainFrame(ttk.Frame):
@@ -193,20 +199,20 @@ class Application(tkinter.Tk):
         self.wm_title("{{cookiecutter.display_name}}")
         self.wm_geometry("640x480")
 
-# TODO: improve insert_status switch implementation
-        if "{{cookiecutter.insert_status}}" == "True":
-            self.statusbar = StatusBar(self)
-            self.statusbar.pack(side="bottom", fill="x")
+{% if cookiecutter.insert_status == 'y' %}# Status bar selection == 'y'
+        self.statusbar = StatusBar(self)
+        self.statusbar.pack(side="bottom", fill="x")
+{% endif %}
 
-# TODO: improve insert_navigation switch implementation
-        if "{{cookiecutter.insert_navigation}}" == "True":
-            self.navigationbar = NavigationBar(self)
-            self.navigationbar.pack(side="left", fill="y")
+{% if cookiecutter.insert_navigation == 'y' %}# Navigation selection == 'y'
+        self.navigationbar = NavigationBar(self)
+        self.navigationbar.pack(side="left", fill="y")
+{% endif %}
 
-# TODO: improve insert_toolbar switch implementation
-        if "{{cookiecutter.insert_toolbar}}" == "True":
-            self.toolbar = ToolBar(self)
-            self.toolbar.pack(side="top", fill="x")
+{% if cookiecutter.insert_toolbar == 'y' %}# Tool bar selection == 'y'
+        self.toolbar = ToolBar(self)
+        self.toolbar.pack(side="top", fill="x")
+{% endif %}
 
         self.mainframe = MainFrame(self)
         self.mainframe.pack(side="right", fill="y")
