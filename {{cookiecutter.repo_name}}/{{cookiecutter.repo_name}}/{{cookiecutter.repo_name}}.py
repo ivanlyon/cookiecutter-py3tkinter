@@ -23,7 +23,7 @@ class PopupDialog(ttk.Frame):
         _label.pack(padx=10, pady=10)
         _button = ttk.Button(self.top, text="OK", command=self.ok_button)
         _button.pack(pady=5)
-# TODO: set PopupDialog title
+        self.top.title(title)
 
     def ok_button(self):
         "OK button feedback."
@@ -58,7 +58,7 @@ class NavigationBar(ttk.Frame):
         widget = event.widget
         _index = int(widget.curselection()[0])
         _value = widget.get(_index)
-        print('List item %d / Navigation %s' % (_index, _value))
+        print('List item %d / %s' % (_index, _value))
 {% endif %}
 
 
@@ -141,8 +141,8 @@ class MenuBar(tkinter.Menu):
         filemenu.add_command(label="Exit", underline=1, command=self.quit)
 
         helpmenu = tkinter.Menu(self, tearoff=False)
-        helpmenu.add_command(label="Help", command=self.help_dialog,
-                             accelerator="F1")
+        helpmenu.add_command(label="Help", command=lambda:
+                             self.help_dialog(None), accelerator="F1")
         helpmenu.add_command(label="About", command=self.about_dialog)
         self.bind_all('<F1>', self.help_dialog)
 
