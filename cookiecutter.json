@@ -7,5 +7,6 @@
     "short_description": "Python 3 Tkinter GUI",
     "insert_navigation": "y",
     "insert_status": "y",
-    "insert_toolbar": "y"
+    "insert_toolbar": "y",
+    "language": "english"
 }

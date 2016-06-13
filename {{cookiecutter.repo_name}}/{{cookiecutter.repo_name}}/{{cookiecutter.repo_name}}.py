@@ -12,6 +12,30 @@ import tkinter
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename
 
+GUI_LABEL = {}
+{% if cookiecutter.language == 'german' %}
+
+# German translations from google translate.  I have no idea if...
+GUI_LABEL['File']     = 'Feile'
+GUI_LABEL['Open']     = 'Öffnen'
+GUI_LABEL['About']    = 'Von'
+GUI_LABEL['New']      = 'Neu'
+GUI_LABEL['Exit']     = 'Ausgang'
+GUI_LABEL['Language'] = 'Sprache'
+GUI_LABEL['Help']     = 'Hilfe'
+
+{% else %}
+
+GUI_LABEL['File']     = 'File'
+GUI_LABEL['Open']     = 'Open'
+GUI_LABEL['About']    = 'About'
+GUI_LABEL['New']      = 'New'
+GUI_LABEL['Exit']     = 'Exit'
+GUI_LABEL['Language'] = 'Language'
+GUI_LABEL['Help']     = 'Help'
+
+{% endif %}
+
 
 class PopupDialog(ttk.Frame):
     "Sample popup dialog implemented to provide feedback."
@@ -139,19 +163,21 @@ class MenuBar(tkinter.Menu):
         tkinter.Menu.__init__(self, parent)
 
         filemenu = tkinter.Menu(self, tearoff=False)
-        filemenu.add_command(label="New", command=self.new_dialog)
-        filemenu.add_command(label="Open", command=self.open_dialog)
+        filemenu.add_command(label=GUI_LABEL['New'], command=self.new_dialog)
+        filemenu.add_command(label=GUI_LABEL['Open'], command=self.open_dialog)
         filemenu.add_separator()
-        filemenu.add_command(label="Exit", underline=1, command=self.quit)
+        filemenu.add_command(label=GUI_LABEL['Exit'], underline=1,
+                             command=self.quit)
 
         helpmenu = tkinter.Menu(self, tearoff=False)
-        helpmenu.add_command(label="Help", command=lambda:
+        helpmenu.add_command(label=GUI_LABEL['Help'], command=lambda:
                              self.help_dialog(None), accelerator="F1")
-        helpmenu.add_command(label="About", command=self.about_dialog)
+        helpmenu.add_command(label=GUI_LABEL['About'],
+                             command=self.about_dialog)
         self.bind_all('<F1>', self.help_dialog)
 
-        self.add_cascade(label="File", underline=0, menu=filemenu)
-        self.add_cascade(label="Help", underline=0, menu=helpmenu)
+        self.add_cascade(label=GUI_LABEL['File'], underline=0, menu=filemenu)
+        self.add_cascade(label=GUI_LABEL['Help'], underline=0, menu=helpmenu)
 
     def quit(self):
         "Ends toplevel execution."
