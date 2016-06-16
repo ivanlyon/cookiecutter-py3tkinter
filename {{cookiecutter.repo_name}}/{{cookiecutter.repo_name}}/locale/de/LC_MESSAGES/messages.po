@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"POT-Creation-Date: 2016-06-16 11:20+PDT\n"
+"PO-Revision-Date: 2016-06-16 12:39-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 1.6.10\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+
+#: {{cookiecutter.repo_name}}.py:37
+msgid "OK"
+msgstr "OK"
+
+#: {{cookiecutter.repo_name}}.py:61
+msgid "Navigation "
+msgstr "Navigation "
+
+#: {{cookiecutter.repo_name}}.py:74
+msgid "List item"
+msgstr "Listenpunkt"
+
+#: {{cookiecutter.repo_name}}.py:88
+msgid "Unset status "
+msgstr "Unset status "
+
+#: {{cookiecutter.repo_name}}.py:108
+msgid "Tool "
+msgstr "Werkzeug "
+
+#: {{cookiecutter.repo_name}}.py:118
+msgid "Toolbar button"
+msgstr "Schaltfläche in der Symbolleiste"
+
+#: {{cookiecutter.repo_name}}.py:118
+msgid "pressed"
+msgstr "gepresstem"
+
+#: {{cookiecutter.repo_name}}.py:127
+msgid "Template"
+msgstr "Vorlage"
+
+#: {{cookiecutter.repo_name}}.py:155
+msgid "New"
+msgstr "Neu"
+
+#: {{cookiecutter.repo_name}}.py:156
+msgid "Open"
+msgstr "Öffnen"
+
+#: {{cookiecutter.repo_name}}.py:159
+msgid "Exit"
+msgstr "Ausgang"
+
+#: {{cookiecutter.repo_name}}.py:163 {{cookiecutter.repo_name}}.py:170
+msgid "Help"
+msgstr "Hilfe"
+
+#: {{cookiecutter.repo_name}}.py:165 {{cookiecutter.repo_name}}.py:195
+msgid "About"
+msgstr "Von"
+
+#: {{cookiecutter.repo_name}}.py:169
+msgid "File"
+msgstr "Feile"
+
+#: {{cookiecutter.repo_name}}.py:180
+msgid "Help not yet created."
+msgstr "Hilfe noch nicht erstellt."
+
+#: {{cookiecutter.repo_name}}.py:188
+msgid "No description available"
+msgstr "Keine Beschreibung verfügbar"
+
+#: {{cookiecutter.repo_name}}.py:190
+msgid "Author"
+msgstr "Autor"
+
+#: {{cookiecutter.repo_name}}.py:191
+msgid "Email"
+msgstr "Email"
+
+#: {{cookiecutter.repo_name}}.py:192
+msgid "Version"
+msgstr "Version"
+
+#: {{cookiecutter.repo_name}}.py:193
+msgid "GitHub Package"
+msgstr "GitHub -Paket"
+
+#: {{cookiecutter.repo_name}}.py:201
+msgid "New button pressed"
+msgstr "Neu taste gedrückt"
+
+#: {{cookiecutter.repo_name}}.py:201
+msgid "Not yet implemented"
+msgstr "Noch nicht implementiert"
+
+#: {{cookiecutter.repo_name}}.py:208
+msgid "File selected for open: "
+msgstr "Datei für Open ausgewählt:"
+
+#: {{cookiecutter.repo_name}}.py:210
+msgid "No file selected"
+msgstr "Keine Datei ausgewählt"
+
+#: {{cookiecutter.repo_name}}.py:252
+msgid "Uptime"
+msgstr "Betriebszeit"
