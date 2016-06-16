@@ -6,34 +6,22 @@
 """
 
 import datetime
+import gettext
 import sys
 import time
 import tkinter
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename
 
-GUI_LABEL = {}
+# All translations provided for illustrative purposes only.
 {% if cookiecutter.language == 'german' %}
-
-# German translations from google translate.  I have no idea if...
-GUI_LABEL['File']     = 'Feile'
-GUI_LABEL['Open']     = 'Öffnen'
-GUI_LABEL['About']    = 'Von'
-GUI_LABEL['New']      = 'Neu'
-GUI_LABEL['Exit']     = 'Ausgang'
-GUI_LABEL['Language'] = 'Sprache'
-GUI_LABEL['Help']     = 'Hilfe'
-
-{% else %}
-
-GUI_LABEL['File']     = 'File'
-GUI_LABEL['Open']     = 'Open'
-GUI_LABEL['About']    = 'About'
-GUI_LABEL['New']      = 'New'
-GUI_LABEL['Exit']     = 'Exit'
-GUI_LABEL['Language'] = 'Language'
-GUI_LABEL['Help']     = 'Help'
-
+de = gettext.translation('messages', localedir='locale', languages=['de'])
+de.install()
+{% elif cookiecutter.language == 'spanish' %}
+es = gettext.translation('messages', localedir='locale', languages=['es'])
+es.install()
+{% else %} # english
+_ = lambda s: s
 {% endif %}
 
 
@@ -45,7 +33,7 @@ class PopupDialog(ttk.Frame):
         self.top = tkinter.Toplevel(parent)
         _label = ttk.Label(self.top, text=body, justify=tkinter.LEFT)
         _label.pack(padx=10, pady=10)
-        _button = ttk.Button(self.top, text="OK", command=self.ok_button)
+        _button = ttk.Button(self.top, text=_("OK"), command=self.ok_button)
         _button.pack(pady=5)
         self.top.title(title)
 
@@ -69,7 +57,7 @@ class NavigationBar(ttk.Frame):
         self.listbox = tkinter.Listbox(self, bg='white')
         self.listbox.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
         for i in range(1, 100):
-            self.listbox.insert(tkinter.END, "Navigation " + str(i))
+            self.listbox.insert(tkinter.END, _('Navigation ') + str(i))
         self.listbox.config(yscrollcommand=self.scrollbar.set)
         self.scrollbar.config(command=self.listbox.yview)
         self.bind_all('<<ListboxSelect>>', self.onselect)
@@ -82,7 +70,7 @@ class NavigationBar(ttk.Frame):
         widget = event.widget
         _index = int(widget.curselection()[0])
         _value = widget.get(_index)
-        print('List item %d / %s' % (_index, _value))
+        print(_('List item'), ' %d / %s' % (_index, _value))
 {% endif %}
 
 
@@ -96,7 +84,7 @@ class StatusBar(ttk.Frame):
         self.labels = []
         self.config(border=1, relief=tkinter.GROOVE)
         for i in range(self._status_bars):
-            _label_text = "Unset status " + str(i + 1)
+            _label_text = _('Unset status ') + str(i + 1)
             self.labels.append(ttk.Label(self, text=_label_text))
             self.labels[i].config(relief=tkinter.GROOVE)
             self.labels[i].pack(side=tkinter.LEFT, fill=tkinter.X)
@@ -116,7 +104,7 @@ class ToolBar(ttk.Frame):
         self.buttons = []
         self.config(border=1, relief=tkinter.GROOVE)
         for i in range(1, 5):
-            _button_text = "Tool " + str(i)
+            _button_text = _('Tool ') + str(i)
             self.buttons.append(ttk.Button(self, text=_button_text,
                                            command=lambda i=i:
                                            self.run_tool(i)))
@@ -126,7 +114,7 @@ class ToolBar(ttk.Frame):
     def run_tool(self, number):
         "Sample function provided to show how a toolbar command may be used."
 
-        print('Toolbar button', number, 'pressed')
+        print(_('Toolbar button'), number, _('pressed'))
 {% endif %}
 
 
@@ -134,8 +122,8 @@ class MainFrame(ttk.Frame):
     "Main area of user interface content."
 
     past_time = datetime.datetime.now()
-    _advertisement = "Cookiecutter: Open-Source Project Templates"
-    _product = "Template: {{cookiecutter.display_name}}"
+    _advertisement = 'Cookiecutter: Open-Source Project Templates'
+    _product = _('Template') + ': {{cookiecutter.display_name}}'
     _boilerplate = _advertisement + '\n\n' + _product + '\n\n'
 
     def __init__(self, parent):
@@ -151,7 +139,7 @@ class MainFrame(ttk.Frame):
         this_time = datetime.datetime.now()
         if this_time != self.past_time:
             self.past_time = this_time
-            _timestamp = this_time.strftime("%Y-%m-%d %H:%M:%S")
+            _timestamp = this_time.strftime('%Y-%m-%d %H:%M:%S')
             self.display.config(text=self._boilerplate + _timestamp)
         self.display.after(100, self.tick)
 
@@ -163,21 +151,20 @@ class MenuBar(tkinter.Menu):
         tkinter.Menu.__init__(self, parent)
 
         filemenu = tkinter.Menu(self, tearoff=False)
-        filemenu.add_command(label=GUI_LABEL['New'], command=self.new_dialog)
-        filemenu.add_command(label=GUI_LABEL['Open'], command=self.open_dialog)
+        filemenu.add_command(label=_('New'), command=self.new_dialog)
+        filemenu.add_command(label=_('Open'), command=self.open_dialog)
         filemenu.add_separator()
-        filemenu.add_command(label=GUI_LABEL['Exit'], underline=1,
+        filemenu.add_command(label=_('Exit'), underline=1,
                              command=self.quit)
 
         helpmenu = tkinter.Menu(self, tearoff=False)
-        helpmenu.add_command(label=GUI_LABEL['Help'], command=lambda:
+        helpmenu.add_command(label=_('Help'), command=lambda:
                              self.help_dialog(None), accelerator="F1")
-        helpmenu.add_command(label=GUI_LABEL['About'],
-                             command=self.about_dialog)
+        helpmenu.add_command(label=_('About'), command=self.about_dialog)
         self.bind_all('<F1>', self.help_dialog)
 
-        self.add_cascade(label=GUI_LABEL['File'], underline=0, menu=filemenu)
-        self.add_cascade(label=GUI_LABEL['Help'], underline=0, menu=helpmenu)
+        self.add_cascade(label=_('File'), underline=0, menu=filemenu)
+        self.add_cascade(label=_('Help'), underline=0, menu=helpmenu)
 
     def quit(self):
         "Ends toplevel execution."
@@ -187,35 +174,37 @@ class MenuBar(tkinter.Menu):
     def help_dialog(self, event):
         "Dialog cataloging results achievable, and provided means available."
 
-        _description = "Help not yet created."
-        PopupDialog(self, "{{cookiecutter.display_name}}", _description)
+        _description = _('Help not yet created.')
+        PopupDialog(self, '{{cookiecutter.display_name}}', _description)
 
     def about_dialog(self):
         "Dialog concerning information about entities responsible for program."
 
-        _description = "{{cookiecutter.short_description}}"
-        if _description == "":
-            _description = "No description available"
+        _description = '{{cookiecutter.short_description}}'
+        if _description == '':
+            _description = _('No description available')
         _description += '\n'
-        _description += '\nAuthor: {{cookiecutter.full_name}}'
-        _description += '\nEmail: {{cookiecutter.email}}'
-        _description += '\nVersion: {{cookiecutter.version}}'
-        _description += '\nGitHub Package: {{cookiecutter.repo_name}}'
-        PopupDialog(self, "About {{cookiecutter.display_name}}", _description)
+        _description += '\n' + _('Author') + ': {{cookiecutter.full_name}}'
+        _description += '\n' + _('Email') + ': {{cookiecutter.email}}'
+        _description += '\n' + _('Version') + ': {{cookiecutter.version}}'
+        _description += '\n' + _('GitHub Package') + \
+                        ': {{cookiecutter.repo_name}}'
+        PopupDialog(self, _('About') + ' {{cookiecutter.display_name}}',
+                    _description)
 
     def new_dialog(self):
         "Non-functional dialog indicating successful navigation."
 
-        PopupDialog(self, "New button pressed", "Not yet implemented")
+        PopupDialog(self, _('New button pressed'), _('Not yet implemented'))
 
     def open_dialog(self):
         "Standard askopenfilename() invocation and result handling."
 
         _name = tkinter.filedialog.askopenfilename()
         if isinstance(_name, str):
-            print('File selected for open: ' + _name)
+            print(_('File selected for open: ') + _name)
         else:
-            print('No file selected')
+            print(_('No file selected'))
 
 
 class Application(tkinter.Tk):
@@ -225,12 +214,12 @@ class Application(tkinter.Tk):
         tkinter.Tk.__init__(self)
         menubar = MenuBar(self)
         self.config(menu=menubar)
-        self.wm_title("{{cookiecutter.display_name}}")
-        self.wm_geometry("640x480")
+        self.wm_title('{{cookiecutter.display_name}}')
+        self.wm_geometry('640x480')
 
 {% if cookiecutter.insert_status == 'y' %}# Status bar selection == 'y'
         self.statusbar = StatusBar(self)
-        self.statusbar.pack(side="bottom", fill="x")
+        self.statusbar.pack(side='bottom', fill='x')
         self.bind_all('<Enter>', lambda e: self.statusbar.set_text(0,
                       'Mouse: 1'))
         self.bind_all('<Leave>', lambda e: self.statusbar.set_text(0,
@@ -243,24 +232,24 @@ class Application(tkinter.Tk):
 
 {% if cookiecutter.insert_navigation == 'y' %}# Navigation selection == 'y'
         self.navigationbar = NavigationBar(self)
-        self.navigationbar.pack(side="left", fill="y")
+        self.navigationbar.pack(side='left', fill='y')
 {% endif %}
 
 {% if cookiecutter.insert_toolbar == 'y' %}# Tool bar selection == 'y'
         self.toolbar = ToolBar(self)
-        self.toolbar.pack(side="top", fill="x")
+        self.toolbar.pack(side='top', fill='x')
 {% endif %}
 
         self.mainframe = MainFrame(self)
-        self.mainframe.pack(side="right", fill="y")
+        self.mainframe.pack(side='right', fill='y')
 
 {% if cookiecutter.insert_status == 'y' %}# Status bar selection == 'y'
     def uptime(self):
         _upseconds = str(int(round((datetime.datetime.now() - self.start_time).total_seconds())))
-        self.statusbar.set_text(2, 'Uptime: ' + _upseconds)
+        self.statusbar.set_text(2, _('Uptime') + ': ' + _upseconds)
         self.after(1000, self.uptime)
 {% endif %}
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     APPLICATION_GUI = Application()
     APPLICATION_GUI.mainloop()
